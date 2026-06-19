@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22 width=%22100%22 height=%22100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%234f46e5%22/><path d=%22M30 40 L45 25 L70 50 M45 45 L60 30 L85 55%22 stroke=%22white%22 stroke-width=%228%22 stroke-linecap=%22round%22 fill=%22none%22/></svg>" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="InsightFlow User Analytics Platform dashboard for monitoring user activity, sessions, timelines, and heatmaps." />
+    
+    <title>InsightFlow | Real-time User Analytics</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+    
+    <!-- Self Analytics Ingestion: tracks views/clicks of the dashboard itself in real-time! -->
+    <script src="/tracker.js" data-host="http://localhost:5000"></script>
+  </body>
+</html>
