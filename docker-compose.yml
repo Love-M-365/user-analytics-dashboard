@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:6.0
+    container_name: ua-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - ua-network
+
+  backend:
+    build: ./backend
+    container_name: ua-backend
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - MONGODB_URI=mongodb://mongodb:27017/user-analytics
+    depends_on:
+      - mongodb
+    networks:
+      - ua-network
+
+  frontend:
+    build: ./frontend
+    container_name: ua-frontend
+    ports:
+      - "3000:80"
+    environment:
+      - VITE_API_URL=http://localhost:5000
+    depends_on:
+      - backend
+    networks:
+      - ua-network
+
+networks:
+  ua-network:
+    driver: bridge
+
+volumes:
+  mongo-data:
+    driver: local
