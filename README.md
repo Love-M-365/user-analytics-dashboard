@@ -12,19 +12,18 @@ Below is the conceptual architecture of the monorepo platform:
 graph TD
     UserBrowser[User Browser / Target Site] -- (1) Load tracker.js --> TrackerScript[Tracker Script]
     TrackerScript -- (2) Send events via Fetch/Beacon --> ExpressAPI[Express Server: Port 5000]
-    ExpressAPI -- (3) Write Ingested Event --> MongoDB[(MongoDB: Port 27017)]
-    ExpressAPI -- (4) Broadcast event via WebSockets --> DashboardClient[React Dashboard: Port 3000]
+    ExpressAPI -- (3) Write Ingested Event --> MongoDB[(MongoDB Atlas: Cloud DB)]
+    ExpressAPI -- (4) Broadcast event via WebSockets --> DashboardClient[React Dashboard: Port 5173]
     DashboardClient -- (5) API Queries for Overview/Journeys --> ExpressAPI
 ```
 
 ---
 
-## 📂 Project Structure
+## 🛠️ Tech Stack & Monorepo Structure
 
-InsightFlow is structured as a monorepo consisting of:
-*   `tracker/`: Client-side JavaScript snippet to embed on any target website.
-*   `backend/`: Express.js server, Mongoose models, aggregation controllers, and WebSocket handlers.
-*   `frontend/`: React + Vite + Tailwind CSS dashboard with Recharts visualizations, interactive timelines, and coordinates-mapped canvas heatmaps.
+*   `tracker/`: Client-side JavaScript snippet. Captures clicks and page transitions.
+*   `backend/`: Express.js, Mongoose models, aggregation controllers, CORS handling, and Socket.io WebSocket handlers.
+*   `frontend/`: React + Vite + Tailwind CSS dashboard with Recharts, coordinate scaling, interactive user journey maps, and visual heatmap canvas overlays.
 
 ---
 
@@ -34,13 +33,13 @@ InsightFlow is structured as a monorepo consisting of:
 Create a `.env` file in the `backend/` directory:
 ```env
 PORT=5000
-MONGODB_URI=mongodb://localhost:27017/user-analytics
+MONGODB_URI=mongodb://... # Your MongoDB Atlas connection URI
 ```
 
 ### Frontend (`frontend/.env` - Optional)
 Create a `.env` file in the `frontend/` directory if you want to point to a production API:
 ```env
-VITE_API_URL=http://localhost:5000
+VITE_API_URL=https://your-deployed-backend-url.com
 ```
 
 ---
@@ -49,10 +48,10 @@ VITE_API_URL=http://localhost:5000
 
 ### Prerequisites
 *   Node.js (v18+ recommended)
-*   MongoDB running locally on port `27017`
+*   An active MongoDB Atlas cluster or local database
 
-### 1. Ingest Inital Synthetic Seed Data
-To populate the dashboard with beautiful sample charts:
+### 1. Seed Initial Mock Data
+To populate the dashboard charts and overview metrics immediately:
 ```bash
 cd backend
 npm install
@@ -64,7 +63,7 @@ npm run seed
 cd backend
 npm run dev
 ```
-The server will boot on `http://localhost:5000` and start listening for tracking events.
+The server will boot on `http://localhost:5000` and start listening for telemetry events.
 
 ### 3. Start the Frontend Dashboard
 ```bash
@@ -72,75 +71,80 @@ cd ../frontend
 npm install
 npm run dev
 ```
-Open `http://localhost:5173` in your browser. Navigating around the dashboard will trigger tracking events on itself!
+Open `http://localhost:5173` in your browser. 
+*   **Authentication:** The console is protected. Enter the admin credentials:
+    *   **Email:** `admin@insightflow.com`
+    *   **Password:** `admin123`
+    *   *(Or click the "Auto-fill admin credentials" button on the login card.)*
+
+### 4. Serve the Demo Showcase Target Site
+To test tracking in real-time, serve the static demo website:
+```bash
+cd ../demo
+npx serve -l 8080
+```
+Open `http://localhost:8080` in your browser and click around. You will instantly see your click points and paths populate the dashboard live!
 
 ---
 
-## 🐳 Docker Deployment
+## 🧠 Assumptions & Engineering Trade-offs
 
-The stack is containerized for seamless production setups. To spin up the database, backend, and dashboard with a single command:
-```bash
-docker-compose up --build
-```
-*   **Frontend**: accessible at `http://localhost:3000`
-*   **Backend API**: accessible at `http://localhost:5000`
-*   **MongoDB**: accessible at `http://localhost:27017`
+During the design and construction of the platform, the following engineering decisions were made:
+
+### 1. Session Storage (`localStorage` vs. `Cookies`)
+*   **Decision:** We store the unique `session_id` inside the browser's `localStorage`.
+*   **Trade-off:** While cookies can be sent automatically with HTTP requests, they are vulnerable to CSRF and domain scoping issues. `localStorage` is simple, doesn't expire automatically, and can be easily managed by JavaScript. For cross-subdomain tracking in enterprise setups, cookies would be preferred.
+
+### 2. Real-Time Updates (`WebSockets` vs. `Polling`)
+*   **Decision:** We integrated `Socket.io` to stream events in real-time to the dashboard.
+*   **Trade-off:** WebSockets maintain an active TCP connection. In high-concurrency systems, millions of open connections can drain server resources. However, for a user experience dashboard, WebSockets provide immediate, sub-second live activity ticker updates without database polling overhead.
+
+### 3. Visual Heatmaps (`Mock Wireframe Canvas` vs. `Iframe Mirroring`)
+*   **Decision:** We overlay click dots onto a mock wireframe of the target layouts rather than embedding an `iframe` of the page.
+*   **Trade-off:** Iframe mirroring (used by platforms like Hotjar) captures the exact styling of target sites but suffers from layout-shift vulnerabilities, CORS blocking, and security sandbox escapes. The wireframe canvas solves this, consumes minimal resources, and renders clicks accurately by normalizing coordinates into page-relative percentages:
+    $$\text{Percentage } X = \left(\frac{x}{vw}\right) \times 100$$
+    $$\text{Percentage } Y = \left(\frac{y}{vh}\right) \times 100$$
+
+### 4. Reliability (`sendBeacon` vs. `fetch`)
+*   **Decision:** The tracker uses `navigator.sendBeacon` and falls back to standard asynchronous `fetch`.
+*   **Trade-off:** Standard `fetch` requests can fail during page unloads (e.g. clicking a link to go to another page). `sendBeacon` queues the request directly to the browser agent, guaranteeing delivery without blocking browser threads.
+
+---
+
+## 🚢 Production Deployment Guide
+
+### Option 1: Render / Railway (PaaS - Recommended)
+1.  **Backend Deployment:**
+    *   Deploy as a **Web Service**.
+    *   **Root Directory:** `backend`
+    *   **Build Command:** `npm install`
+    *   **Start Command:** `npm start`
+    *   **Env Variables:** Set `MONGODB_URI` to your Atlas string and `PORT` to `5000`.
+2.  **Frontend Deployment:**
+    *   Deploy as a **Static Web App** (or use Vercel/Netlify).
+    *   **Root Directory:** `frontend`
+    *   **Build Command:** `npm run build`
+    *   **Publish Directory:** `dist`
+    *   **Env Variables:** Set `VITE_API_URL` to your deployed backend URL.
+
+### Option 2: Docker Compose (VPS Deployment)
+If hosting on a VPS, the platform includes a ready-to-run [docker-compose.yml](file:///c:/Users/Love/Desktop/Projects/Analytics/docker-compose.yml) file.
+1.  Verify the environment variables in `docker-compose.yml` (specifically `VITE_API_URL` points to your VPS IP or domain name).
+2.  Boot the containers:
+    ```bash
+    docker-compose up -d --build
+    ```
+    *This starts the MongoDB database, Backend container (port 5000), and Frontend dashboard container (port 3000).*
 
 ---
 
 ## 🔌 Integrating the Tracker Script
 
-To track any website, add the following script tag right before the closing `</body>` tag:
+To track any external website or your personal portfolio, add the following script tag before the closing `</body>` tag:
 
 ```html
 <script 
-  src="http://localhost:5000/tracker/tracker.js" 
-  data-host="http://localhost:5000">
+  src="https://<your-deployed-backend-url>/tracker/tracker.js" 
+  data-host="https://<your-deployed-backend-url>">
 </script>
 ```
-
----
-
-## 📖 API Documentation
-
-### 1. Ingest Event
-*   **Endpoint**: `POST /api/events`
-*   **Payload**:
-    ```json
-    {
-      "sessionId": "sess_82jks89w",
-      "eventType": "click",
-      "pageUrl": "/pricing",
-      "timestamp": "2026-06-19T07:30:00.000Z",
-      "x": 485,
-      "y": 320,
-      "vw": 1440,
-      "vh": 900,
-      "element": "button.buy-pro"
-    }
-    ```
-
-### 2. Retrieve Sessions list
-*   **Endpoint**: `GET /api/sessions`
-*   **Query Params**: `search`, `sortBy` (`activity` | `duration` | `events`), `order` (`asc` | `desc`), `page`, `limit`, `startDate`, `endDate`
-
-### 3. Retrieve Session Details (User Journey)
-*   **Endpoint**: `GET /api/sessions/:sessionId`
-*   **Response**: Cronological ordered timeline events representing a user's flow.
-
-### 4. Retrieve Heatmap Coordinates
-*   **Endpoint**: `GET /api/heatmap`
-*   **Query Params**: `pageUrl` (e.g. `/home`)
-*   **Response**: Click event arrays with relative scales `vw`/`vh`.
-
-### 5. Aggregate Dashboard Overview
-*   **Endpoint**: `GET /api/analytics/overview`
-*   **Query Params**: `startDate`, `endDate`
-*   **Response**: Aggregated KPI counts, top pages rankings, action mix details, and date-grouped activity timelines.
-
----
-
-## 💡 Future Enhancements
-1.  **Funnel Analysis**: Map multiple event paths to measure user drop-offs between pages.
-2.  **Session Replay**: Record scroll events and hover positions to reconstruct full video sessions.
-3.  **GeoIP Mapping**: Resolve client IP addresses to geographic locations for country demographics.
