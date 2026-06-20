@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>InsightFlow Mock App | Docs</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans select-none">
+
+  <!-- Header -->
+  <header class="h-16 px-8 border-b border-slate-800 flex items-center justify-between bg-slate-950/60 backdrop-blur sticky top-0 z-50">
+    <a href="index.html" class="font-extrabold text-indigo-400 text-lg">InsightFlow</a>
+    <nav class="flex gap-6 text-sm text-slate-400">
+      <a href="features.html" class="hover:text-white transition">Features</a>
+      <a href="pricing.html" class="hover:text-white transition">Pricing</a>
+      <a href="docs.html" class="text-white border-b-2 border-indigo-500 pb-1">Docs</a>
+    </nav>
+    <a href="dashboard.html" class="px-4 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-750 text-xs font-semibold shadow-md shadow-indigo-500/10 transition">Console App</a>
+  </header>
+
+  <!-- Docs Workspace Split Layout -->
+  <div class="flex-grow flex">
+    <!-- Left Sidebar Links -->
+    <aside class="w-56 border-r border-slate-850 bg-slate-950 flex flex-col p-6 space-y-3.5 text-xs text-slate-450">
+      <span class="font-extrabold text-indigo-400 text-xs tracking-wider uppercase mb-4">Documentation</span>
+      <a 
+        href="#" 
+        id="sidebar-intro" 
+        class="sidebar-intro text-indigo-400 font-bold bg-slate-900 border border-slate-850 px-3 py-2 rounded-xl"
+      >
+        Introduction Guide
+      </a>
+      <a 
+        href="#" 
+        id="sidebar-install" 
+        class="sidebar-install px-3 py-2 hover:bg-slate-900/40 rounded-xl hover:text-slate-200 transition"
+      >
+        Installation
+      </a>
+      <a href="#" class="px-3 py-2 hover:bg-slate-900/40 rounded-xl hover:text-slate-200 transition">API Endpoints</a>
+      <a href="#" class="px-3 py-2 hover:bg-slate-900/40 rounded-xl hover:text-slate-200 transition">Client SDK</a>
+    </aside>
+
+    <!-- Main Docs Article Details -->
+    <main class="flex-1 p-10 max-w-3xl">
+      <h2 class="text-2xl font-extrabold text-slate-100">Quick Start Integration Guide</h2>
+      <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+        Get started by importing the tracking script. Copy the snippet and paste it right before the closing body tag of your website.
+      </p>
+
+      <!-- Code block copying target elements -->
+      <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl font-mono text-[11px] text-indigo-300 mt-8 relative shadow-sm">
+        <span>{`&lt;script src="tracker.js" data-host="http://localhost:5000"&gt;&lt;/script&gt;`}</span>
+        <button 
+          id="copy-code" 
+          class="copy-code absolute right-3.5 top-3.5 bg-slate-800 hover:bg-slate-700 hover:text-white text-[10px] text-slate-300 font-bold px-3 py-1.5 rounded-xl border border-slate-750 transition"
+        >
+          Copy SDK script
+        </button>
+      </div>
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer class="h-16 bg-slate-950 border-t border-slate-850 text-slate-500 text-[10px] flex items-center justify-center">
+    © 2026 InsightFlow Showcase Site. All rights reserved.
+  </footer>
+
+  <script src="http://localhost:5000/tracker/tracker.js" data-host="http://localhost:5000"></script>
+</body>
+</html>

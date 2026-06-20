@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>InsightFlow Mock App | Checkout</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans select-none justify-between">
+
+  <!-- Header -->
+  <header class="h-16 px-8 border-b border-slate-800 flex items-center justify-between bg-slate-950/60 backdrop-blur sticky top-0 z-50">
+    <a href="index.html" class="font-extrabold text-indigo-400 text-lg">InsightFlow</a>
+    <span class="text-xs text-slate-500 font-bold uppercase">Checkout Funnel</span>
+  </header>
+
+  <!-- Checkout Workspace Frame -->
+  <main class="flex-grow flex flex-col items-center justify-center p-6">
+    <div class="bg-slate-950 border border-slate-850 p-8 rounded-2xl w-80 space-y-6 shadow-2xl">
+      <h3 class="font-bold text-sm text-center text-slate-200">Complete Billing Details</h3>
+      
+      <!-- Card mock input field -->
+      <div class="space-y-2">
+        <label class="text-[10px] text-slate-550 font-bold uppercase tracking-wider">Credit Card Number</label>
+        <input 
+          type="text" 
+          id="card-number" 
+          class="card-number w-full h-10 bg-slate-900 border border-slate-800 rounded-xl px-4 text-xs text-slate-350 focus:outline-none focus:border-indigo-500 transition" 
+          value="Credit Card"
+        />
+      </div>
+
+      <!-- Submit payment button -->
+      <a 
+        href="dashboard.html" 
+        id="pay-submit" 
+        class="pay-submit block w-full py-2.5 bg-indigo-500 hover:bg-indigo-600 text-center text-xs font-bold rounded-xl mt-4 shadow-lg shadow-indigo-500/20 transition-all"
+      >
+        Complete Purchase
+      </a>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="h-16 bg-slate-950 border-t border-slate-850 text-slate-500 text-[10px] flex items-center justify-center">
+    © 2026 InsightFlow Showcase Site. All rights reserved.
+  </footer>
+
+  <script src="http://localhost:5000/tracker/tracker.js" data-host="http://localhost:5000"></script>
+</body>
+</html>

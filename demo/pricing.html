@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>InsightFlow Mock App | Pricing</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans">
+
+  <!-- Header -->
+  <header class="h-16 px-8 border-b border-slate-800 flex items-center justify-between bg-slate-950/60 backdrop-blur sticky top-0 z-50">
+    <a href="index.html" class="font-extrabold text-indigo-400 text-lg">InsightFlow</a>
+    <nav class="flex gap-6 text-sm text-slate-400">
+      <a href="features.html" class="hover:text-white transition">Features</a>
+      <a href="pricing.html" class="text-white border-b-2 border-indigo-500 pb-1">Pricing</a>
+      <a href="docs.html" class="hover:text-white transition">Docs</a>
+    </nav>
+    <a href="dashboard.html" class="px-4 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-750 text-xs font-semibold shadow-md shadow-indigo-500/10 transition">Console App</a>
+  </header>
+
+  <!-- Pricing layout workspace -->
+  <main class="flex-grow flex flex-col items-center justify-center px-6 py-12">
+    <div class="text-center mb-8">
+      <h2 class="text-3xl font-extrabold tracking-tight">Flexible Commercial Plans</h2>
+      <p class="text-slate-400 text-xs mt-2">Pick a plan to transition to the checkout funnel.</p>
+    </div>
+
+    <!-- Billing toggles -->
+    <div class="flex items-center gap-3 bg-slate-950 p-1.5 rounded-lg border border-slate-800 mb-10 cursor-pointer">
+      <span id="billing-toggle" class="billing-toggle px-3 py-1 bg-indigo-600 rounded-md text-xs font-bold transition">
+        Annual Billing
+      </span>
+      <span class="px-3 py-1 text-slate-500 text-xs font-medium hover:text-slate-350 transition">
+        Monthly Billing
+      </span>
+    </div>
+
+    <!-- Pricing cards grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-3xl">
+      <!-- Pro Plan Card -->
+      <div class="bg-slate-950 border border-slate-850 p-8 rounded-2xl flex flex-col justify-between h-[320px] hover:border-slate-800 transition">
+        <div>
+          <h3 class="text-lg font-bold text-slate-200">Pro Plan</h3>
+          <p class="text-xs text-slate-505 mt-1">For growing startups & scale-ups.</p>
+          <div class="mt-4 text-3xl font-extrabold text-white">$49<span class="text-sm font-normal text-slate-500">/mo</span></div>
+        </div>
+        <a 
+          href="checkout.html" 
+          id="buy-pro" 
+          class="buy-pro w-full py-2.5 rounded-xl bg-indigo-500 hover:bg-indigo-600 text-center text-xs font-bold transition-all shadow-md shadow-indigo-500/10"
+        >
+          Subscribe to Pro Plan
+        </a>
+      </div>
+
+      <!-- Enterprise Plan Card -->
+      <div class="bg-slate-950 border border-slate-850 p-8 rounded-2xl flex flex-col justify-between h-[320px] hover:border-slate-800 transition">
+        <div>
+          <h3 class="text-lg font-bold text-slate-200">Enterprise</h3>
+          <p class="text-xs text-slate-505 mt-1">For custom volume & high SLAs.</p>
+          <div class="mt-4 text-3xl font-extrabold text-white">Custom</div>
+        </div>
+        <button 
+          id="buy-enterprise" 
+          class="buy-enterprise w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-750 border border-slate-700 text-xs font-bold transition-all"
+        >
+          Contact Sales
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="h-16 bg-slate-950 border-t border-slate-850 text-slate-500 text-[10px] flex items-center justify-center">
+    © 2026 InsightFlow Showcase Site. All rights reserved.
+  </footer>
+
+  <script src="http://localhost:5000/tracker/tracker.js" data-host="http://localhost:5000"></script>
+</body>
+</html>

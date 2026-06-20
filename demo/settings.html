@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>InsightFlow Mock App | Settings</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans select-none">
+
+  <!-- Header -->
+  <header class="h-14 px-6 border-b border-slate-800 flex items-center justify-between bg-slate-950/60 backdrop-blur sticky top-0 z-50">
+    <div class="flex items-center gap-3">
+      <a href="dashboard.html" class="text-xs font-bold text-slate-500 hover:text-slate-250 transition">← Dashboard</a>
+      <span class="text-slate-800">|</span>
+      <span class="font-bold text-slate-200">Settings Configuration</span>
+    </div>
+    <button 
+      id="save-settings" 
+      class="save-settings bg-indigo-650 hover:bg-indigo-600 text-xs px-4 py-1.5 rounded-xl font-bold transition shadow-md shadow-indigo-500/10"
+    >
+      Save Preferences
+    </button>
+  </header>
+
+  <!-- Workspace Container Layout -->
+  <main class="flex-grow p-8 max-w-4xl w-full mx-auto flex gap-6">
+    <!-- Left Navigation options -->
+    <div class="w-1/3 space-y-4">
+      <div class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Options</div>
+      <button 
+        id="toggle-dark" 
+        class="toggle-dark w-full text-left text-xs bg-slate-900 border border-slate-800 hover:border-slate-750 px-4 py-3 rounded-xl transition font-bold"
+      >
+        Switch Dark Mode
+      </button>
+      <div class="text-xs p-3 text-slate-500 font-semibold cursor-not-allowed">Profile Details</div>
+      <div class="text-xs p-3 text-slate-500 font-semibold cursor-not-allowed">Billing Details</div>
+    </div>
+
+    <!-- Right Forms Layout -->
+    <div class="flex-grow bg-slate-900 border border-slate-850 rounded-2xl p-6 space-y-6">
+      <div class="space-y-2">
+        <label class="text-xs text-slate-400 font-semibold">Username Identifier</label>
+        <input 
+          type="text" 
+          id="username-field" 
+          class="username-field w-full h-10 bg-slate-950 border border-slate-800 rounded-xl px-4 text-xs text-slate-300 focus:outline-none focus:border-indigo-500 transition" 
+          value="User Field"
+        />
+      </div>
+      <p class="text-[10px] text-slate-500">Edit the input text or click the dark mode toggle option on the left sidebar to capture input-specific telemetry coordinates.</p>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="h-16 bg-slate-950 border-t border-slate-850 text-slate-500 text-[10px] flex items-center justify-center">
+    © 2026 InsightFlow Showcase Site. All rights reserved.
+  </footer>
+
+  <script src="http://localhost:5000/tracker/tracker.js" data-host="http://localhost:5000"></script>
+</body>
+</html>

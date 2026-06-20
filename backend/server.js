@@ -20,7 +20,10 @@ const io = new Server(server, {
 });
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: true,
+  credentials: true
+}));
 app.use(express.json());
 app.use('/tracker', express.static(path.join(__dirname, '../tracker')));
 

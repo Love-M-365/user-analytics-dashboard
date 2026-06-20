@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>InsightFlow Mock App | Home</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans">
+
+  <!-- Header -->
+  <header class="h-16 px-8 border-b border-slate-800 flex items-center justify-between bg-slate-950/60 backdrop-blur sticky top-0 z-50">
+    <a href="index.html" class="font-extrabold text-indigo-400 text-lg">InsightFlow</a>
+    <nav class="flex gap-6 text-sm text-slate-400">
+      <a href="features.html" class="hover:text-white transition">Features</a>
+      <a href="pricing.html" class="hover:text-white transition">Pricing</a>
+      <a href="docs.html" class="hover:text-white transition">Docs</a>
+    </nav>
+    <a href="dashboard.html" class="px-4 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-750 text-xs font-semibold shadow-md shadow-indigo-500/10 transition">Console App</a>
+  </header>
+
+  <!-- Hero Body -->
+  <main class="flex-grow flex flex-col items-center justify-center text-center px-6 py-20 relative">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.15)_0,transparent_60%)] pointer-events-none"></div>
+    
+    <span class="text-[10px] uppercase font-bold tracking-widest text-indigo-400 bg-indigo-950/50 px-3 py-1 rounded-full border border-indigo-800/50 mb-6">
+      Demo Showcase Target
+    </span>
+    
+    <h1 class="text-5xl font-extrabold tracking-tight max-w-2xl bg-gradient-to-r from-white via-slate-200 to-slate-500 bg-clip-text text-transparent leading-tight">
+      Analyze Visitor Behaviors in Real-Time
+    </h1>
+    
+    <p class="text-slate-450 text-base mt-4 max-w-lg leading-relaxed">
+      This is a multi-page target website. Click the buttons, links, and navigate around to feed real-time coordinates into your dashboard!
+    </p>
+    
+    <div class="mt-10 flex gap-4">
+      <a href="features.html" class="px-6 py-3 rounded-xl bg-indigo-500 hover:bg-indigo-600 text-sm font-bold shadow-lg shadow-indigo-500/20 transition duration-200">
+        Explore Features
+      </a>
+      <a href="pricing.html" class="px-6 py-3 rounded-xl bg-slate-800 hover:bg-slate-750 border border-slate-700 text-sm font-bold transition duration-200">
+        View Pricing Plan
+      </a>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="h-16 bg-slate-950 border-t border-slate-850 text-slate-500 text-[10px] flex items-center justify-center">
+    © 2026 InsightFlow Showcase Site. All rights reserved.
+  </footer>
+
+  <!-- User Analytics Tracker Script -->
+  <script src="http://localhost:5000/tracker/tracker.js" data-host="http://localhost:5000"></script>
+</body>
+</html>
