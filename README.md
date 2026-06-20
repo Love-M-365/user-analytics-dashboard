@@ -4,6 +4,14 @@ InsightFlow is a production-quality, high-fidelity User Analytics Platform desig
 
 ---
 
+## 🚀 Live Deployments
+
+*   **Frontend Dashboard Console:** [https://user-analytics-swart.vercel.app/](https://user-analytics-swart.vercel.app/)
+*   **Backend Ingestion API Server:** [https://user-analytics-dashboard-44a7.onrender.com](https://user-analytics-dashboard-44a7.onrender.com)
+*   **Static Tracker JS Script:** [https://user-analytics-dashboard-44a7.onrender.com/tracker/tracker.js](https://user-analytics-dashboard-44a7.onrender.com/tracker/tracker.js)
+
+---
+
 ## 🏛️ System Architecture
 
 Below is the conceptual architecture of the monorepo platform:
